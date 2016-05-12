@@ -1,5 +1,6 @@
 package org.iqnect.testiqnect;
 
+import android.os.Build;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -7,6 +8,8 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.transition.Slide;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +20,8 @@ import android.widget.LinearLayout;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment implements ViewPager.OnPageChangeListener {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     /**
      * The number of pages (wizard steps) to show in this demo.
@@ -38,6 +43,8 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
 
     private ImageView[] dots;
 
+    private ImageView mIntroBg;
+
     public MainActivityFragment() {
     }
 
@@ -51,11 +58,14 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
+        mIntroBg = (ImageView) view.findViewById(R.id.intro_bg);
+
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) view.findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
-        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
+//        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
         setupPageIndicator(view);
 
     }
@@ -108,6 +118,13 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
             dots[i].setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.normal_dot, null));
         }
         dots[position].setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.selected_dot, null));
+
+        if (position == 2) {
+            mIntroBg.setVisibility(View.GONE);
+        } else {
+            mIntroBg.setVisibility(View.VISIBLE);
+        }
+
     }
 
     @Override
@@ -132,7 +149,14 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
                 case 1:
                     return new ScreenSlidePageTwoFragment();
                 case 2:
-                    return new SignupFragment();
+                    SignupFragment fragment = new SignupFragment();
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        Log.d(TAG, "Setting enter transition");
+                        Slide slide = new Slide();
+                        slide.setDuration(5000);
+                        fragment.setEnterTransition(slide);
+                    }
+                    return fragment;
             }
 
             return null;

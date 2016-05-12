@@ -14,6 +14,7 @@ import android.widget.TextView;
 public class SignupFragment extends Fragment {
 
 
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
