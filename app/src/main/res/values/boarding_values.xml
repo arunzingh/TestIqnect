@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Styles -->
+
+    <style name="BoardingTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:background">@color/white</item>
+    </style>
+
+
+    <style name="BoardingTitle" >
+        <item name="android:textColor">@color/magenta</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="BoardingDescrption">
+        <item name="android:textColor">@color/grey</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:lineSpacingMultiplier">1.2</item>
+    </style>
+
+    <style name="BoardingTextMagenta">
+        <item name="android:textColor">@color/magenta</item>
+    </style>
+
+    <style name="BoardingText">
+        <item name="android:textSize">@dimen/boarding_text_size</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:padding">6dp</item>
+    </style>
+
+    <style name="BoardingTextWhite" parent="BoardingText">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColorLink">@android:color/white</item>
+        <item name="android:textSize"
+              tools:ignore="SpUsage">12dp</item>
+    </style>
+
+
+
+    <style name="BoardingTextWhiteBig" parent="BoardingTextWhite">
+        <item name="android:textSize"
+              tools:ignore="SpUsage">16dp</item>
+    </style>
+
+    <style name="BoardingTextPurple" parent="BoardingText">
+        <item name="android:textColor">@color/bubblegum</item>
+        <item name="android:textSize"
+              tools:ignore="SpUsage">16dp</item>
+    </style>
+
+    <!-- Dimensions -->
+
+    <dimen name="boarding_top_padding">40dp</dimen>
+    <dimen name="boarding_shadow_height">100dp</dimen>
+    <dimen name="boarding_phone_margin">30dp</dimen>
+    <dimen name="boarding_text_size">14sp</dimen>
+    <dimen name="boarding_sign_up_button_width">260dp</dimen>
+
+</resources>

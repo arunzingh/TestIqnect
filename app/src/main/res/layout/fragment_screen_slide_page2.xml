@@ -1,0 +1,28 @@
+<!-- fragment_screen_slide_page.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/BoardingTitle"
+        android:text="@string/convenience_title"
+        />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:letterSpacing="0.05"
+        style="@style/BoardingDescrption"
+        android:text="@string/convenience_description"
+        />
+
+</LinearLayout>

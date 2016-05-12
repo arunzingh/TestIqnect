@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- iQNECT signature colors -->
+
+    <color name="teal">#ff0ba9bc</color>
+    <color name="teal_pressed">#ff2b8a99</color>
+    <color name="teal_disabled">#800ba9bc</color>
+    <color name="teal2">#FF3EB4C1</color>
+    <color name="bubblegum">#ffed174f</color>
+    <color name="bubblegum_pressed">#ffbb1a42</color>
+    <color name="bubblegum_disabled">#80ed174f</color>
+    <color name="white">#ffffffff</color>
+
+    <color name="white_pressed">#ffebebeb</color>
+    <color name="white_disabled">#80ffffff</color>
+
+    <color name="magenta">#E91E63</color>
+    <color name="grey">#616161</color>
+    <color name="light_grey">#9E9E9E</color>
+
+    <!-- Shared controls -->
+
+    <color name="list_divider">#ffd0d0d0</color>
+    <color name="list_item_background">@color/white</color>
+    <color name="list_item_background_pressed">@color/white_pressed</color>
+    <color name="list_item_background_disabled">@color/white_pressed</color>
+    <color name="shadow">#1f1a1a1a</color>
+
+    <!-- Translucent -->
+
+    <color name="translucent_status_bar">#33000000</color>
+    <color name="translucent_activity">#d8000000</color>
+
+</resources>
