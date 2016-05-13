@@ -1,8 +1,10 @@
 package org.iqnect.testiqnect;
 
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,18 +24,10 @@ public class ScreenSlidePageOneFragment extends Fragment {
         return rootView;
     }
 
-    public static ScreenSlidePageOneFragment newInstance(int id) {
-
-        Bundle args = new Bundle();
-
-        ScreenSlidePageOneFragment fragment = new ScreenSlidePageOneFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
     }
 

@@ -2,6 +2,7 @@ package org.iqnect.testiqnect;
 
 
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ActivityCompat.postponeEnterTransition(this);
         setContentView(R.layout.activity_main);
 
         getSupportFragmentManager()

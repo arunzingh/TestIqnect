@@ -10,9 +10,11 @@
 
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/magenta</item>
+        <item name="colorPrimaryDark">@color/magenta</item>
+        <item name="colorAccent">@color/magenta</item>
     </style>
+
+
 
 </resources>

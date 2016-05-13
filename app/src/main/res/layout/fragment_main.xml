@@ -3,27 +3,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/intro_bg"
-        android:layout_width="match_parent"
-        android:layout_height="280dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/intro_magazine"
-        />
+    <RelativeLayout
+        android:id="@+id/intro_content"
+        android:layout_width="wrap_content"
+        android:layout_height="358dp">
+
+        <org.iqnect.testiqnect.BlurImageView
+            android:id="@+id/intro_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/intro_magazine" />
+
+        <RelativeLayout
+            android:id="@+id/containter_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:background="@android:color/transparent"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/intro_img_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/intro_phone" />
+
+            <RelativeLayout
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="10dp"
+                android:clipChildren="true"
+                android:background="@android:color/transparent"
+                android:layout_width="wrap_content"
+                android:layout_height="220dp">
+
+                <ImageView
+                    android:id="@+id/scanner_bar_up"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:background="@drawable/intro_scanner_bar_up" />
+
+                <ImageView
+                    android:id="@+id/scanner_bar_down"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="invisible"
+                    android:background="@drawable/intro_scanner_bar_down" />
+
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="240dp" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/intro_content" />
 
 
     <LinearLayout
         android:id="@+id/viewPagerIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="20dp"
         android:gravity="center"
         android:orientation="horizontal" />
