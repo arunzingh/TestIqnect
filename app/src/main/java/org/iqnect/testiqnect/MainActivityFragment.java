@@ -67,6 +67,7 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
     Animation animScannerUp;
     Animation animScannerDown;
     Animation animScaleup;
+    Animation animScaleDown;
 
     Runnable blurRunnable = new Runnable() {
         @Override
@@ -120,6 +121,7 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
         animScannerDown.setAnimationListener(scannerDownListener);
 
         animScaleup = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.scale_up);
+        animScaleDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.scale_down);
 
         animSlideUp.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -248,8 +250,7 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
             mScannerBarDown.clearAnimation();
             mPhoneLayout.startAnimation(animScaleup);
         } else if (position == 0) {
-            animScaleup.setRepeatMode(Animation.REVERSE);
-            animScaleup.start();
+            mPhoneLayout.startAnimation(animScaleDown);
         }
     }
 
