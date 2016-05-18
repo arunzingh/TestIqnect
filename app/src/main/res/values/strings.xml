@@ -1,11 +1,18 @@
 <resources>
     <string name="app_name">TestIqnect</string>
     <string name="hello_world">Hello world!</string>
-    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="action_settings">Settings</string>
-    <string name="welcome_description">Start scanning participating magazines, videos and outdoor billboards to receive exclusive content.</string>
+    <string name="welcome_description">Start scanning participating magazines, videos and outdoor billboards to receive exclusive content</string>
     <string name="welcome_iqnect">Welcome to iQnect</string>
     <string name="convenience_title">Convenience on the go</string>
     <string name="convenience_description">Buy products, watch videos and save coupons conveniently in the app</string>
+    <string name="skip">Skip</string>
+    <string name="sign_up_now">Sign Up Now</string>
+    <string name="sign_up_desc">Create an account or log in now to access full features</string>
+    <string name="log_in">Log in</string>
+    <string name="already_account">Already have an account?</string>
+    <string name="facebook">Sign up with Facebook</string>
+    <string name="sign_up">Sign up</string>
+    <string name="email">Email</string>
 </resources>

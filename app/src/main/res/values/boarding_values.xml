@@ -20,6 +20,11 @@
         <item name="android:lineSpacingMultiplier">1.2</item>
     </style>
 
+    <style name="BoardingSkip" >
+        <item name="android:textColor">@color/magenta</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <style name="BoardingTextMagenta">
         <item name="android:textColor">@color/magenta</item>
     </style>

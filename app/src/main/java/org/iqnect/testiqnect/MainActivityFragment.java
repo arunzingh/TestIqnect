@@ -1,26 +1,27 @@
 package org.iqnect.testiqnect;
 
-import android.os.Build;
-import android.os.Handler;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.transition.Slide;
-import android.transition.TransitionManager;
+import android.support.v8.renderscript.Allocation;
+import android.support.v8.renderscript.Element;
+import android.support.v8.renderscript.RenderScript;
+import android.support.v8.renderscript.ScriptIntrinsicBlur;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.LinearInterpolator;
-import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -47,39 +48,45 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
      * The pager adapter, which provides the pages to the view pager widget.
      */
     private PagerAdapter mPagerAdapter;
-
     private LinearLayout mPagerIndicator;
-
     private ImageView[] dots;
-
-    private BlurImageView mIntroBg;
-
+    private ImageView mIntroBg;
     private RelativeLayout mPhoneLayout;
-
+    private RelativeLayout mCoverLayout;
     private ImageView mScannerBarUp;
-
     private ImageView mScannerBarDown;
+    private ImageView imgPhoneBg;
+    private ImageView imgPayload;
 
-    private float focus = 0.0f;
+    private float radius = 1.0f;
 
-    Handler imgBlurHandler = new Handler();
+    private Handler imgBlurHandler = new Handler();
 
-    Animation animScannerUp;
-    Animation animScannerDown;
-    Animation animScaleup;
+    private Animation animRotateAndSlideUp;
+    private Animation animScannerUp;
+    private Animation animScannerDown;
+    private Animation animFadeIn;
+    private Animation animFadeOut;
+    private Animation animPayloadSlideUp;
+    private Animation animPayloadSlideDown;
+    private Animation animSlideOut;
+    private Animation animSlideIn;
+
+    private Bitmap bmpIntroMagazine;
+
     Animation animScaleDown;
 
     Runnable blurRunnable = new Runnable() {
         @Override
         public void run() {
-            Log.d(TAG, "blurRunnable");
-            if (focus >= 0.3f) return;
+            Log.d(TAG, "blurRunnable:radius=" + radius);
+            if (radius >= 24) return;
 
-            focus = focus + 0.02f;
+            radius = radius + 2.0f;
 
-            mIntroBg.setFocus(focus);
+            new ImageBlurTask(getActivity(), bmpIntroMagazine).execute(radius);
 
-            imgBlurHandler.postDelayed(blurRunnable, 50);
+            imgBlurHandler.postDelayed(blurRunnable, 250);
         }
     };
 
@@ -97,59 +104,47 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
         super.onViewCreated(view, savedInstanceState);
 
 
-        mIntroBg = (BlurImageView) view.findViewById(R.id.intro_bg);
-
+        mIntroBg = (ImageView) view.findViewById(R.id.intro_bg);
+        imgPhoneBg = (ImageView) view.findViewById(R.id.intro_img_phone_overlay);
         mPhoneLayout = (RelativeLayout) view.findViewById(R.id.containter_phone);
-
+        mCoverLayout = (RelativeLayout) view.findViewById(R.id.intro_content);
         mScannerBarUp = (ImageView) view.findViewById(R.id.scanner_bar_up);
-
         mScannerBarDown = (ImageView) view.findViewById(R.id.scanner_bar_down);
+        imgPayload = (ImageView) view.findViewById(R.id.img_intro_payload);
+
+        bmpIntroMagazine = BitmapFactory.decodeResource(getResources(), R.drawable.intro_magazine);
 
         // Instantiate a ViewPager and a PagerAdapter.
         mPager = (ViewPager) view.findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        mPager.setPageTransformer(false, new PageFadeTransformer());
         setupPageIndicator(view);
 
-        final Animation animSlideUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
-                R.anim.slide_up);
+    }
 
-        animScannerUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.move_up);
-        animScannerUp.setAnimationListener(scannerUpListener);
 
-        animScannerDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.move_down);
-        animScannerDown.setAnimationListener(scannerDownListener);
 
-        animScaleup = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.scale_up);
+    private void startScanningAnimation() {
+        Log.d(TAG, "startScanningAnimation");
+        if (mPager.getCurrentItem() == 0) {
+            mScannerBarDown.setVisibility(View.VISIBLE);
+
+            animScannerUp.setAnimationListener(scannerUpListener);
+            animScannerDown.setAnimationListener(scannerDownListener);
+            mScannerBarDown.startAnimation(animScannerDown);
+        }
+
+    }
         animScaleDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.scale_down);
 
-        animSlideUp.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                Log.d(TAG, "animSlideUp onAnimationEnd");
-                mScannerBarDown.startAnimation(animScannerDown);
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
-        view.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPhoneLayout.setVisibility(View.VISIBLE);
-                mPhoneLayout.startAnimation(animSlideUp);
-                imgBlurHandler.post(blurRunnable);
-
-            }
-        }, 1500);
-
+    private void stopScanningAnimation() {
+        mScannerBarUp.setVisibility(View.INVISIBLE);
+        mScannerBarDown.setVisibility(View.INVISIBLE);
+        mScannerBarUp.clearAnimation();
+        mScannerBarDown.clearAnimation();
+        animScannerUp.setAnimationListener(null);
+        animScannerDown.setAnimationListener(null);
     }
 
     private Animation.AnimationListener scannerUpListener = new Animation.AnimationListener() {
@@ -193,12 +188,95 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
     @Override
     public void onStart() {
         super.onStart();
+
+        animRotateAndSlideUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(),
+                R.anim.phone_rotate_slide_up);
+
+        animScannerUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.scanner_move_up);
+        animScannerDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.scanner_move_down);
+        animFadeIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.phone_bg_fade_in);
+        animFadeOut = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.phone_bg_fade_out);
+        animPayloadSlideUp = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.payload_slide_up);
+        animPayloadSlideDown = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.payload_slide_down);
+        animSlideOut = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_out);
+        animSlideIn = AnimationUtils.loadAnimation(getActivity().getApplicationContext(), R.anim.slide_in);
+
+        EaseSineOutInterpolator easeSineOut = new EaseSineOutInterpolator();
+
+//        animRotateAndSlideUp.setInterpolator(easeSineOut);
+//        animPayloadSlideUp.setInterpolator(easeSineOut);
+
+        animSlideOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                mCoverLayout.setVisibility(View.INVISIBLE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        animPayloadSlideDown.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Log.d(TAG, "animPayloadSlideDown onAnimationEnd");
+                imgPayload.setVisibility(View.INVISIBLE);
+                startScanningAnimation();
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        animRotateAndSlideUp.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Log.d(TAG, "animRotateAndSlideUp onAnimationEnd");
+                startScanningAnimation();
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        getView().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPhoneLayout.setVisibility(View.VISIBLE);
+                mPhoneLayout.startAnimation(animRotateAndSlideUp);
+                imgBlurHandler.post(blurRunnable);
+
+            }
+        }, 1500);
+
         mPager.addOnPageChangeListener(this);
     }
 
     @Override
     public void onStop() {
         super.onStop();
+        imgBlurHandler.removeCallbacks(blurRunnable);
         mPager.removeOnPageChangeListener(this);
     }
 
@@ -228,36 +306,63 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        Log.d(TAG, "onPageScrolled:position= " + position);
 
+        if (position == 0) {
+            stopScanningAnimation();
+        }
     }
 
     @Override
     public void onPageSelected(int position) {
-
+        Log.d(TAG, "onPageSelected:position= " + position);
         for (int i = 0; i < mPagerAdapter.getCount(); i++) {
             dots[i].setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.normal_dot, null));
         }
         dots[position].setImageDrawable(ResourcesCompat.getDrawable(getResources(), R.drawable.selected_dot, null));
 
         if (position == 2) {
-            mIntroBg.setVisibility(View.GONE);
+            mCoverLayout.startAnimation(animSlideOut);
         } else {
-            mIntroBg.setVisibility(View.VISIBLE);
+            if (mCoverLayout.getVisibility() != View.VISIBLE || (animSlideOut.hasStarted() && !animSlideOut.hasEnded())) {
+                mCoverLayout.startAnimation(animSlideIn);
+                mCoverLayout.setVisibility(View.VISIBLE);
+            }
         }
 
         if (position == 1) {
-            mScannerBarUp.clearAnimation();
-            mScannerBarDown.clearAnimation();
-            mPhoneLayout.startAnimation(animScaleup);
+            Log.d(TAG, "started=" + animRotateAndSlideUp.hasStarted() + " ended="+ animRotateAndSlideUp.hasEnded());
+            stopScanningAnimation();
+            blurPhoneBackground(true);
+            mPhoneLayout.animate().scaleX(1.5f).scaleY(1.5f).setDuration(500).start();
+            imgPayload.setVisibility(View.VISIBLE);
+            imgPayload.startAnimation(animPayloadSlideUp);
         } else if (position == 0) {
-            mPhoneLayout.startAnimation(animScaleDown);
+            mPhoneLayout.animate().scaleX(1.0f).scaleY(1.0f).setDuration(500).start();
+            blurPhoneBackground(false);
+            imgPayload.startAnimation(animPayloadSlideDown);
         }
+    }
+
+    private void blurPhoneBackground(boolean isBlur) {
+        if (isBlur) {
+            imgPhoneBg.setVisibility(View.VISIBLE);
+            imgPhoneBg.startAnimation(animFadeIn);
+        } else {
+            imgPhoneBg.startAnimation(animFadeOut);
+            imgPhoneBg.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
+        if (state == ViewPager.SCROLL_STATE_IDLE && mPager.getCurrentItem() == 0) {
+            Log.d(TAG, "onPageScrollStateChanged:state= " + state);
+            startScanningAnimation();
+        }
     }
+
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageOneFragment objects, in
@@ -293,4 +398,38 @@ public class MainActivityFragment extends Fragment implements ViewPager.OnPageCh
             return NUM_PAGES;
         }
     }
+
+    private class ImageBlurTask extends AsyncTask<Float, Void, Bitmap> {
+
+        Context context;
+        Bitmap bmpSource;
+
+        public ImageBlurTask(Context context, Bitmap bmp) {
+            this.context = context;
+            this.bmpSource = bmp;
+        }
+
+        @Override
+        protected Bitmap doInBackground(Float... floats) {
+            Bitmap bitmap = bmpSource.copy(bmpSource.getConfig(), true);
+
+            final RenderScript rs = RenderScript.create(context);
+            final Allocation input = Allocation.createFromBitmap(rs, bmpSource, Allocation.MipmapControl.MIPMAP_NONE,
+                    Allocation.USAGE_SCRIPT);
+            final Allocation output = Allocation.createTyped(rs, input.getType());
+            final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+            script.setRadius(radius);
+            script.setInput(input);
+            script.forEach(output);
+            output.copyTo(bitmap);
+            return bitmap;
+
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            mIntroBg.setImageBitmap(bitmap);
+        }
+    }
+
 }

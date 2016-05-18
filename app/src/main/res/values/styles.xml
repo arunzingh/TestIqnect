@@ -5,16 +5,43 @@
     </style>
 
     <!-- Base application theme. -->
-    <style name="AppTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Base" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
 
-        <item name="windowNoTitle">true</item>
-        <item name="windowActionBar">false</item>
-        <item name="colorPrimary">@color/magenta</item>
-        <item name="colorPrimaryDark">@color/magenta</item>
-        <item name="colorAccent">@color/magenta</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <!--<item name="colorPrimary">@color/magenta</item>-->
+        <!--<item name="colorPrimaryDark">@color/magenta</item>-->
+        <!--<item name="colorAccent">@color/magenta</item>-->
+
+        <!--<item name="colorControlNormal">#c5c5c5</item>-->
+        <!--<item name="colorControlActivated">@color/magenta</item>-->
+        <!--<item name="colorControlHighlight">@color/magenta</item>-->
     </style>
 
+    <style name="BoardingEditTextTheme">
+        <item name="colorControlNormal">@color/light_grey1</item>
+        <item name="colorControlActivated">@color/magenta</item>
+        <item name="android:textColorPrimary">@color/grey</item>
+    </style>
+
+    <style name="BoardingEditText">
+        <item name="android:layout_width">300dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:theme">@style/BoardingEditTextTheme</item>
+        <item name="android:textColorHint">@color/magenta</item>
+        <item name="android:textSize">@dimen/edit_text_size</item>
+    </style>
+
+    <style name="BoardingEditTextFloatingLabel" parent="TextAppearance.Design.Hint">
+        <item name="android:textColor">@color/magenta</item>
+        <item name="android:textSize">@dimen/floating_label_text_size</item>
+
+    </style>
+
+    <style name="StyledTilEditTextLayout">
+        <item name="android:textColorHint">@color/magenta</item>
+    </style>
 
 
 </resources>
