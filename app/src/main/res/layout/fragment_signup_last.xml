@@ -1,0 +1,89 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/BoardingSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="signup"
+            android:layout_gravity="right"
+            android:layout_marginRight="@dimen/margin_standard"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:text="@string/skip" />
+
+
+        <TextView
+            style="@style/BoardingTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="signup"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:text="@string/last_step" />
+
+        <TextView
+            style="@style/BoardingDescrption"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:transitionName="signup"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:letterSpacing="0.05"
+            android:text="@string/last_step_desc" />
+
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/StyledTilEditTextLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="signup"
+            android:layout_marginTop="30dp"
+            android:layout_gravity="center"
+            app:hintTextAppearance="@style/BoardingEditTextFloatingLabel">
+
+            <EditText
+                style="@style/BoardingEditText"
+                android:hint="@string/gender"
+                android:textCursorDrawable="@null" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            style="@style/StyledTilEditTextLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:transitionName="signup"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:layout_gravity="center"
+            app:hintTextAppearance="@style/BoardingEditTextFloatingLabel">
+
+            <EditText
+                style="@style/BoardingEditText"
+                android:hint="@string/age"
+                android:textCursorDrawable="@null" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:transitionName="signup"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/margin_standard"
+            android:background="@drawable/signup_button"
+            android:text="@string/start_scanning"
+            android:textColor="@android:color/white"
+            android:textSize="12sp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>

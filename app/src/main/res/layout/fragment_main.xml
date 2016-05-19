@@ -3,6 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <FrameLayout
+        android:id="@+id/fragment_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/viewPagerIndicator"/>
+
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
@@ -18,9 +25,17 @@
         <ImageView
             android:id="@+id/intro_bg"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
             android:src="@drawable/intro_magazine" />
+
+        <ImageView
+            android:id="@+id/intro_bg_blur"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:scaleType="centerCrop"
+            android:src="@drawable/intro_magazine_blur" />
 
         <RelativeLayout
             android:id="@+id/containter_phone"

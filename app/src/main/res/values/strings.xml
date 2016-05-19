@@ -15,4 +15,12 @@
     <string name="facebook">Sign up with Facebook</string>
     <string name="sign_up">Sign up</string>
     <string name="email">Email</string>
+    <string name="gender">Gender</string>
+    <string name="age">Age</string>
+    <string name="last_step">Last Step</string>
+    <string name="start_scanning">Start Scanning</string>
+    <string name="last_step_desc">A few more details about yourself and we are good to go</string>
+    <string name="invalid_email">Oops! Your email seems to be invalid</string>
+    <string name="invalid_pwd">Oops! You left your password blank</string>
+
 </resources>
