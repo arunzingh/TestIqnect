@@ -1,28 +1,61 @@
 package org.iqnect.testiqnect;
 
 
-import android.support.v4.app.FragmentTransaction;
-import android.os.Build;
+import android.animation.Animator;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
-import org.iqnect.testiqnect.MainActivityFragment.ScreenSlidePagerAdapter;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements OnFragmentTouched {
+
+    private static final String TAG = MainActivity.class.getSimpleName();
 
     MainActivityFragment mMainFragment;
+
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActivityCompat.postponeEnterTransition(this);
         setContentView(R.layout.activity_main);
+
+        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+
+        findViewById(R.id.drawer).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragment, new MoreFragment(), MoreFragment.class.getSimpleName())
+                        .addToBackStack(MoreFragment.class.getSimpleName())
+                        .commit();
+            }
+        });
+
+//        toolbar.findViewById(R.id.toolbar_title).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                NavigationFragment fragment = new NavigationFragment();
+//                getSupportFragmentManager()
+//                        .beginTransaction()
+//                        .add(R.id.fragment, fragment, NavigationFragment.class.getSimpleName())
+//                        .addToBackStack(NavigationFragment.class.getSimpleName())
+//                        .commit();
+//            }
+//        });
 
         mMainFragment = new MainActivityFragment();
         getSupportFragmentManager()
@@ -32,21 +65,46 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void onEmailSignUpClick(View vw) {
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
 
+    }
 
-        ScreenSlidePagerAdapter adapter = (ScreenSlidePagerAdapter) mMainFragment.getViewPager().getAdapter();
+    @Override
+    public void onFragmentTouched(Fragment fragment, float x, float y) {
 
-        SignupFragment signupFragment = (SignupFragment) adapter.getFragment(2);
+        if (fragment instanceof MoreFragment) {
+            Log.d(TAG, "onFragmentTouched");
+            final MoreFragment theFragment = (MoreFragment) fragment;
 
-        if (signupFragment.checkSignUpFieldsValidity()) {
-            SignupFragmentLast signupLast = new SignupFragmentLast();
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .setCustomAnimations(R.anim.slide_in_from_right, R.anim.slide_out_to_left, R.anim.slide_in_from_left, R.anim.slide_out_to_right)
-                    .add(R.id.fragment, signupLast, MainActivityFragment.class.getSimpleName())
-                    .addToBackStack(MainActivityFragment.class.getSimpleName())
-                    .commit();
+            Animator unreveal = theFragment.prepareUnrevealAnimator();
+
+            unreveal.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    // remove the fragment only when the animation finishes
+                    getSupportFragmentManager().beginTransaction().remove(theFragment).commit();
+                    //to prevent flashing the fragment before removing it, execute pending transactions inmediately
+                    getSupportFragmentManager().executePendingTransactions();
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+            unreveal.start();
         }
     }
+
+
+
 }

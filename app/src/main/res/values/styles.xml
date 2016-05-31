@@ -44,4 +44,19 @@
     </style>
 
 
+    <style name="GenderDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!--item RadioButton or CheckBox color-->
+        <item name="colorControlNormal">@color/grey</item>
+        <item name="colorControlActivated">@color/magenta</item>
+        <!--item text color-->
+        <item name="textColorAlertDialogListItem">@color/grey</item>
+        <!--buttons color-->
+        <item name="colorAccent">@color/magenta</item>
+        <!--title and message color-->
+        <item name="android:textColorPrimary">@color/magenta</item>
+        <!--dialog background-->
+        <!--<item name="android:windowBackground">@drawable/background_dialog</item>-->
+    </style>
+
+
 </resources>

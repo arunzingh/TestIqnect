@@ -4,7 +4,6 @@
     <!-- Styles -->
 
     <style name="BoardingTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:background">@color/white</item>
     </style>
 
 
@@ -13,7 +12,7 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="BoardingDescrption">
+    <style name="BoardingDescription">
         <item name="android:textColor">@color/grey</item>
         <item name="android:textSize">13sp</item>
         <item name="android:gravity">center</item>

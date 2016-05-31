@@ -8,7 +8,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_gradient"
     tools:context="org.iqnect.testiqnect.MainActivity">
+
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/toolbar"
+        ></include>
 
 
     <!-- Fragment -->
@@ -17,5 +23,12 @@
         android:id="@+id/fragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+
+        <FrameLayout
+            android:id="@+id/nav_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            />
 
 </LinearLayout>

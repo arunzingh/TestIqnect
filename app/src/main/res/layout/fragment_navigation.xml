@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/content"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/profile_row"
+        style="@style/NavigationMenuItem">
+
+        <ImageView
+            android:id="@+id/profile_img"
+            style="@style/NavMenuItemImage"
+            android:background="@drawable/profile_pic_unknown"/>
+
+        <TextView
+            android:id="@+id/profile_name"
+            style="@style/NavMenuItemText"
+            android:layout_toRightOf="@+id/profile_img"
+            android:text="@string/sign_up"
+            />
+
+        <ImageView
+            style="@style/NavMenuItemImageArrow"
+            android:background="@drawable/right_arrow"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/scanner_row"
+        style="@style/NavigationMenuItem"
+        android:layout_marginTop="40dp">
+
+
+        <ImageView
+            android:id="@+id/scanner_img"
+            style="@style/NavMenuItemImage"
+            android:background="@drawable/scanner_icon"/>
+
+        <TextView
+            android:id="@+id/scanner_name"
+            style="@style/NavMenuItemText"
+            android:layout_toRightOf="@+id/scanner_img"
+            android:text="@string/scanner"
+            />
+
+        <ImageView
+            style="@style/NavMenuItemImageArrow"
+            android:background="@drawable/right_arrow"/>
+
+        <ImageView
+            style="@style/NavMenuDivider"
+            android:layout_below="@+id/scanner_img"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/coupons_row"
+        style="@style/NavigationMenuItem" >
+
+
+        <ImageView
+            android:id="@+id/coupon_img"
+            style="@style/NavMenuItemImage"
+            android:background="@drawable/coupon_icon"/>
+
+        <TextView
+            android:id="@+id/coupon_name"
+            style="@style/NavMenuItemText"
+            android:layout_toRightOf="@+id/coupon_img"
+            android:text="@string/coupons"
+            />
+
+        <ImageView
+            style="@style/NavMenuItemImageArrow"
+            android:background="@drawable/right_arrow"/>
+
+        <ImageView
+            style="@style/NavMenuDivider"
+            android:layout_below="@+id/coupon_img"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/history_row"
+        style="@style/NavigationMenuItem" >
+
+        <ImageView
+            android:id="@+id/history_img"
+            style="@style/NavMenuItemImage"
+            android:background="@drawable/history_icon"/>
+
+        <TextView
+            android:id="@+id/history_name"
+            style="@style/NavMenuItemText"
+            android:layout_toRightOf="@+id/history_img"
+            android:text="@string/history"
+            />
+
+        <ImageView
+            style="@style/NavMenuItemImageArrow"
+            android:background="@drawable/right_arrow"/>
+
+        <ImageView
+            style="@style/NavMenuDivider"
+            android:layout_below="@+id/history_img"
+            />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/account_row"
+        style="@style/NavigationMenuItem">
+
+        <ImageView
+            android:id="@+id/account_img"
+            style="@style/NavMenuItemImage"
+            android:background="@drawable/account_icon"/>
+
+        <TextView
+            android:id="@+id/account_name"
+            style="@style/NavMenuItemText"
+            android:layout_toRightOf="@+id/account_img"
+            android:text="@string/account"
+            />
+
+        <ImageView
+            style="@style/NavMenuItemImageArrow"
+            android:background="@drawable/right_arrow"/>
+
+        <ImageView
+            style="@style/NavMenuDivider"
+            android:layout_below="@+id/account_img"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/more_row"
+        style="@style/NavigationMenuItem"
+        android:layout_marginTop="15dp">
+
+        <ImageView
+            android:id="@+id/more_img"
+            style="@style/NavMenuItemImage"
+            android:background="@drawable/more_icon"/>
+
+        <TextView
+            android:id="@+id/more_name"
+            style="@style/NavMenuItemText"
+            android:layout_toRightOf="@+id/more_img"
+            android:text="@string/more"
+            />
+
+        <ImageView
+            style="@style/NavMenuItemImageArrow"
+            android:background="@drawable/right_arrow"/>
+    </RelativeLayout>
+
+
+</LinearLayout>
