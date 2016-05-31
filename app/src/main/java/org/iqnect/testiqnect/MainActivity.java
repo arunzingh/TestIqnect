@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements OnFragmentTouched
     }
 
     @Override
-    public void onFragmentTouched(Fragment fragment, float x, float y) {
+    public void onFragmentTouched(Fragment fragment) {
 
         if (fragment instanceof MoreFragment) {
             Log.d(TAG, "onFragmentTouched");

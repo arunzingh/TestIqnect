@@ -40,13 +40,19 @@ public class MoreFragment extends Fragment {
 
                 Animator reveal = ViewAnimationUtils.createCircularReveal(v, 0, 0, 0, radius);
                 reveal.setInterpolator(new DecelerateInterpolator(2f));
-                reveal.setDuration(700);
+                reveal.setDuration(300);
                 reveal.start();
             }
 
 
         });
 
+        rootView.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                listener.onFragmentTouched(MoreFragment.this);
+            }
+        }, 2000);
 
 
         return rootView;
@@ -63,9 +69,9 @@ public class MoreFragment extends Fragment {
 
     public Animator prepareUnrevealAnimator() {
         int radius = getEnclosingCircleRadius(getView(), getView().getWidth(), getView().getHeight());
-        Animator anim = ViewAnimationUtils.createCircularReveal(getView(), getView().getWidth(), getView().getHeight(), radius, 0);
+        Animator anim = ViewAnimationUtils.createCircularReveal(getView(), 0, 0, radius, 0);
         anim.setInterpolator(new AccelerateInterpolator(2f));
-        anim.setDuration(700);
+        anim.setDuration(300);
         return anim;
     }
 
